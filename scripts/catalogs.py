@@ -37,8 +37,21 @@ def load_catalog(catalog=None, body_catalog=None):
         # Preserve special resting eyes; a generic bilateral blink would erase their meaning.
         if catalog is None:
             for item in items:
-                if item['no'] in (9, 22, 28, 33, 38, 43, 48, 53, 57, 58, 59, 60):
+                if item['no'] in (9, 22, 28, 38, 43, 57, 58, 59):
                     item['eye_auto'] = False
+                if item['no'] in (53, 60):
+                    item.update(rest_eyes='open', eye_auto=True, eye_motion={
+                        'type': 'single_eye_wink',
+                        'moving_eye': 'reference_selected',
+                        'other_eye': 'open',
+                        'frame_states': [
+                            {'moving_eye': state, 'other_eye': 'open'}
+                            for state in ('open', 'half_closed', 'closed', 'half_open')
+                        ]})
+                if item['no'] == 60:
+                    item.update(rest_mouth='closed', mouth_motion={
+                        'type': 'tongue_extension',
+                        'frame_states': ['closed', 'tongue_tip', 'tongue_partial', 'tongue_longest']})
     body_path = Path(body_catalog) if body_catalog else (
         REFERENCES / 'body-language-catalog-60.md' if catalog is None else None)
     if body_path:

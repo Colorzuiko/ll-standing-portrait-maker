@@ -8,7 +8,9 @@
 python scripts/ll_portrait_pipeline.py plan --character phebe --plugin /path/LL_StandingPictureDirect.js --out /project/output/expression-portraits/phebe/new_run
 ```
 
-完整計畫有60項A、44項B new_pose及16項reuse_default；new_pose還要製作／驗收並填motion_id，不是列入計畫即完成。使用者明確只要臉部時用 `--scope face-only`，B仍保留catalog_mode但mode記reuse_default、reason表明本次未包含B；完整原技能批次狀態不能由此冒稱完成。
+完整計畫有60項A、43項B new_pose及17項reuse_default；new_pose還要製作／驗收並填motion_id，不是列入計畫即完成。使用者明確只要臉部時用 `--scope face-only`，B仍保留catalog_mode但mode記reuse_default、reason表明本次未包含B；完整原技能批次狀態不能由此冒稱完成。
+
+指定新版肢體時，以 `--body-catalog references/body-language-catalog-60-v2.md` 選35項new_pose與25項reuse_default，並記錄所選來源與SHA。60的嘴0格為closed，mouth.motion由清單的mouth_motion傳入，type=tongue_extension、frame_states依序為closed／tongue_tip／tongue_partial／tongue_longest；這是製作規格，仍須生成及驗收實際畫格。
 
 使用者清單可用 `--catalog /path/catalog.md`（相同四欄表格式）或顯式JSON清單（no/id/name/face，其他欄位可選），自訂肢體Markdown用 `--body-catalog`。自訂JSON沒有body_mode時保留undecided，不自行全設沿用。`--count N`只作明確子集，i仍保留原清單編號。
 
@@ -21,6 +23,7 @@ schema_version=1；canvas預設[720,720]。每個pose保存master、sha256、fac
 - A只生成一張共用母圖。工作base是將局部休止臉圖回貼母圖後合成的全尺寸驗收來源，不是另外生成的全身圖，也不是正式runtime重複存檔。
 - 每表情可用combined_sheet記錄raw、normalized、columns=4、rows=1、edit_rectangle=[left,top,right,bottom)、eyes_and_mouth_generated_together=true，以及原生尺寸、目標尺寸與整組共同映射。臉部編輯矩形不能拿本次角色的範例座標當固定值。
 - eyes/mouth各記mask、roi、四張完整畫布frames、frame_wait及order；eyes另記auto、interval_min/max。
+- 53、60記rest_eyes=open、eyes.auto=true，並由清單傳入eyes.motion：type=single_eye_wink、moving_eye=reference_selected、other_eye=open與四格frame_states。0格雙眼全開，1/2/3僅指定眼半閉／閉合／半睜；閉合側依該批參考圖選定後固定。motion是製作與驗收規格，播放器仍使用實際四格圖像；這些欄位本身不會產生或改畫素材。
 - frames必須已受遮罩約束；ROI維持同一裁切框、兩像素不改動邊圈，不能每格緊貼輪廓重裁。
 - eye0+mouth0必須完全重建工作base。readonly／語意／接縫等目視review由實際驗收者填寫，腳本不把pending自動改passed。
 - review欄位為semantic、registration、seams、combinations、transparency。status=accepted仍須全部passed。

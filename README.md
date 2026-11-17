@@ -7,7 +7,7 @@
 ## 內容
 
 - **A：60 個表情**，共用底圖搭配局部臉圖，眼睛與嘴巴各為直向 1 欄 4 列圖集。
-- **B：肢體語言**，正式清單預設 44 個新姿勢、16 個沿用預設站姿；新動作使用橫向 4 欄 1 列圖集。
+- **B：肢體語言**，正式清單預設 43 個新姿勢、17 個沿用預設站姿；新動作使用橫向 4 欄 1 列圖集。
 - **LL 模板 v1.4.0**，支援共用底圖、局部臉圖、獨立眼嘴與原生身體動作播放器。
 - **離線預覽**，匯出 `report.html` 與 `body-report.html`，使用交付素材檢查表情、眼嘴組合、鏡像、縮放與身體動作。
 - **驗證工具**，檢查正式清單、來源雜湊、遮罩、休止格重建、眼嘴 16 組合、圖集去重與插件對照。
@@ -15,6 +15,10 @@
 圖片需由可用的圖片生成／編輯工具製作；附帶腳本負責分格、合成、裁切、拆層與驗證。
 
 ## 取得與使用
+
+本版已依原始52表情核對修正21為「嘆氣」，並將較恐怖的笑容改為溫和漫畫表現。53／60以雙眼睜開為休止，只眨固定一眼；60另有閉嘴休止與三階段吐舌。完整規則見 [表情協調](references/expression-coordination.md)。
+
+需要新版肢體時，以 `--body-catalog references/body-language-catalog-60-v2.md` 選35新增／25沿用；原43／17清單保留。兩版都搭配同一套正式60表情，數量依所選動作表計算。
 
 [下載最新版 ZIP](https://github.com/Colorzuiko/ll-standing-portrait-maker/archive/refs/heads/main.zip)，解壓後將完整資料夾命名為 `ll-standing-portrait-maker`。保留 `SKILL.md`、`agents/`、`references/`、`scripts/` 與 `assets/` 的相對位置。
 
@@ -64,6 +68,9 @@ Windows 若因暫存資料夾過深而遇到路徑長度錯誤，請將測試用
 
 - [正式 60 表情清單](references/expression-catalog-60.md)
 - [正式肢體語言清單](references/body-language-catalog-60.md)
+- [另存新版肢體動作 v2：35 新增／25 沿用](references/body-language-catalog-60-v2.md)
+- [新版表情與肢體設定 JSON 快照](references/expression-catalog-60-body-v2.json)
+- [emontion 原圖與前 52 項逐項核對](references/emontion-audit-52.md)
 - [畫風與構圖](references/style-and-layout.md)
 - [局部差分與 QA](references/layers-and-qa.md)
 - [眼嘴素材共用判定](references/eye-mouth-sharing.md)

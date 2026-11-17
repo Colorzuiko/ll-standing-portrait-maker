@@ -62,8 +62,27 @@ class PipelineTests(unittest.TestCase):
         data=p.read_json(out/'manifest.json')
         self.assertEqual(len(data['expressions']),60);self.assertEqual(len({e['id'] for e in data['expressions']}),60)
         self.assertTrue(all(e['status']=='pending' and e['eyes']['frame_wait']==15 for e in data['expressions']))
-        self.assertEqual(sum(b['mode']=='new_pose' for b in data['body_variants']),44);self.assertEqual(sum(b['mode']=='reuse_default' for b in data['body_variants']),16);self.assertEqual(data['expressions'][0]['name'],'堅定');self.assertEqual(data['expressions'][-1]['name'],'吐舌眨眼')
+        self.assertEqual(sum(b['mode']=='new_pose' for b in data['body_variants']),43);self.assertEqual(sum(b['mode']=='reuse_default' for b in data['body_variants']),17);self.assertEqual(data['expressions'][0]['name'],'堅定');self.assertEqual(data['expressions'][-1]['name'],'吐舌眨眼')
+        self.assertEqual(data['expressions'][20]['name'],'嘆氣')
+        for no in (53,60):
+            entry=data['expressions'][no-1]
+            self.assertEqual(entry['rest_eyes'],'open');self.assertTrue(entry['eyes']['auto'])
+            self.assertEqual(entry['eyes']['motion']['frame_states'],[
+                {'moving_eye':state,'other_eye':'open'} for state in ('open','half_closed','closed','half_open')])
+        self.assertEqual(data['expressions'][59]['rest_mouth'],'closed')
+        self.assertEqual(data['expressions'][59]['mouth']['motion']['frame_states'],
+                         ['closed','tongue_tip','tongue_partial','tongue_longest'])
         self.assertFalse(any(out.rglob('*.png')))
+
+    def test_body_v2_plan_keeps_60_faces_and_35_new_25_reused(self):
+        out=self.root/'v2-plan'
+        p.plan(argparse.Namespace(out=str(out),character='hero',plugin=str(self.plugin),catalog=None,count=None,
+                                 body_catalog=str(p.SKILL/'references/body-language-catalog-60-v2.md')))
+        data=p.read_json(out/'manifest.json')
+        self.assertEqual(len(data['expressions']),60)
+        self.assertEqual(sum(b['mode']=='new_pose' for b in data['body_variants']),35)
+        self.assertEqual(sum(b['mode']=='reuse_default' for b in data['body_variants']),25)
+        self.assertEqual(data['expressions'][59]['mouth']['motion']['type'],'tongue_extension')
 
     def test_compose_locks_all_outside_channels_and_alpha(self):
         base=Image.new('RGBA',(20,20),(200,150,100,254));candidate=Image.new('RGBA',(20,20),(0,0,0,0))

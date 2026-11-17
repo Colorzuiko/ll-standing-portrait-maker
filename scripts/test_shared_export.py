@@ -36,9 +36,28 @@ class SharedTests(unittest.TestCase):
         self.assertIn('rectangles',m['expressions'][56]['face_prompt'])
         self.assertIn('spirals',m['expressions'][58]['face_prompt'])
         self.assertEqual(m['expressions'][59]['name'],'吐舌眨眼')
-        self.assertFalse(m['expressions'][59]['eyes']['auto'])
-        self.assertEqual(sum(v['mode']=='new_pose' for v in m['body_variants']),44)
-        self.assertEqual(sum(v['mode']=='reuse_default' for v in m['body_variants']),16)
+        for index in (52, 59):
+            wink = m['expressions'][index]
+            self.assertEqual(wink['rest_eyes'], 'open')
+            self.assertTrue(wink['eyes']['auto'])
+            self.assertEqual(wink['eyes']['order'], [0, 1, 2, 3])
+            motion = wink['eyes']['motion']
+            self.assertEqual(motion['type'], 'single_eye_wink')
+            self.assertEqual(motion['moving_eye'], 'reference_selected')
+            self.assertEqual([frame['moving_eye'] for frame in motion['frame_states']],
+                             ['open', 'half_closed', 'closed', 'half_open'])
+            self.assertTrue(all(frame['other_eye']=='open' for frame in motion['frame_states']))
+        self.assertEqual(m['expressions'][20]['id'],'21_sigh')
+        self.assertEqual(m['expressions'][20]['name'],'嘆氣')
+        self.assertEqual(m['body_variants'][20]['mode'],'reuse_default')
+        self.assertEqual(m['expressions'][41]['id'],'42_troll_face')
+        self.assertEqual(m['expressions'][28]['name'],'誇張大笑')
+        self.assertEqual(m['expressions'][29]['name'],'調皮壞笑')
+        self.assertEqual(m['expressions'][33]['name'],'使壞咧嘴笑')
+        self.assertTrue(m['expressions'][32]['eyes']['auto'])
+        self.assertTrue(m['expressions'][47]['eyes']['auto'])
+        self.assertEqual(sum(v['mode']=='new_pose' for v in m['body_variants']),43)
+        self.assertEqual(sum(v['mode']=='reuse_default' for v in m['body_variants']),17)
         for kind in ('face','body'):
             self.assertEqual(p.digest(dest/m['catalog_source'][kind+'_snapshot']),m['catalog_source'][kind+'_sha256'])
 

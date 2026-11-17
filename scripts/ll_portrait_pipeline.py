@@ -150,10 +150,15 @@ def plan(args):
         layer = lambda kind: {'mask': f'masks/{eid}-{kind}.png', 'roi': None,
                               'frames': [f'work/{eid}/{kind}{n}.png' for n in range(4)], 'frame_wait': 15, 'order':[0,1,2,3]}
         eyes = {**layer('eyes'), 'auto': item.get('eye_auto', item.get('rest_eyes') != 'closed'), 'interval_min': 180, 'interval_max': 300}
+        if item.get('eye_motion'):
+            eyes['motion'] = item['eye_motion']
+        mouth = layer('mouth')
+        if item.get('mouth_motion'):
+            mouth['motion'] = item['mouth_motion']
         expressions.append({'no': item.get('no', i), 'id': eid, 'name': item['name'], 'face_prompt': item['face'],
                             'pose_id': 'default', 'status': 'pending', 'base': f'work/{eid}/base.png',
                             'rest_eyes': item.get('rest_eyes', 'open'), 'rest_mouth': item.get('rest_mouth', 'closed'),
-                            'eyes': eyes, 'mouth': layer('mouth'), 'review': {key: 'pending' for key in REVIEWS}})
+                            'eyes': eyes, 'mouth': mouth, 'review': {key: 'pending' for key in REVIEWS}})
     manifest = {'schema_version': 1, 'character_id': character, 'canvas': [720, 720], 'expected_count': count,
                 'source_basis': 'SKILL_3RD canonical catalogs; fixed-pose facial layers',
                 'catalog_source': provenance, 'scope': getattr(args, 'scope', 'full'),
