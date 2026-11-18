@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "skill": "ll-eye-mouth-animation",
+  "canonical_source": "repository root",
+  "refresh_command": "python -X utf8 scripts/sync_workflow_skills.py",
+  "files": [
+    {
+      "source": "requirements.txt",
+      "target": "requirements.txt",
+      "sha256": "08be9578d04b65559eb8478d7a66538d593e017bf911cd340d03453a54b67eee"
+    },
+    {
+      "source": "scripts/eye_mouth_portrait.py",
+      "target": "scripts/eye_mouth_portrait.py",
+      "sha256": "08fb9cc93a85ba819817e8a9125d4f12b266c1e59e9d439e13fa7fb34856f64e"
+    },
+    {
+      "source": "scripts/ll_portrait_pipeline.py",
+      "target": "scripts/ll_portrait_pipeline.py",
+      "sha256": "aae3552b10ce02baa6250a9cc48deee3919a2d0d7e816e692938eb3068940f94"
+    },
+    {
+      "source": "scripts/catalogs.py",
+      "target": "scripts/catalogs.py",
+      "sha256": "13f79a3f1485d19a8588ec80d83636957234b37bc6778612844f02f1ed012fe9"
+    },
+    {
+      "source": "scripts/shared_export.py",
+      "target": "scripts/shared_export.py",
+      "sha256": "ded3602237283e1a7535e0a0243ff0d412d51e5e5a2161067832bb27a39f69eb"
+    },
+    {
+      "source": "scripts/shared_report.py",
+      "target": "scripts/shared_report.py",
+      "sha256": "4a1fb98100cd781def4e91010a61be8a5820221ccb2f37733f24827a4848d924"
+    },
+    {
+      "source": "scripts/split_work_sheet.py",
+      "target": "scripts/split_work_sheet.py",
+      "sha256": "d7a7d3c6eef1fda82318262c928ecf86c228946b5ffd1e981532c43d22993e5d"
+    },
+    {
+      "source": "references/expression-catalog-60.md",
+      "target": "references/expression-catalog-60.md",
+      "sha256": "4747dc35941d1ee2ff985930822c2fe4f780ad81c4803453122bc561cec3003e"
+    },
+    {
+      "source": "references/body-language-catalog-60.md",
+      "target": "references/body-language-catalog-60.md",
+      "sha256": "de8b670ee26727bd2b0508d47e111891cc3865023abf15e54228cd927deee89a"
+    },
+    {
+      "source": "references/body-language-catalog-60-v2.md",
+      "target": "references/body-language-catalog-60-v2.md",
+      "sha256": "0054440bd67e36e2068b98bab6b340b116e4157b0db23d2606f2fd1ec32f3d8f"
+    },
+    {
+      "source": "references/expression-catalog-60-body-v2.json",
+      "target": "references/expression-catalog-60-body-v2.json",
+      "sha256": "6eb6014a9dcd66241781a4305260c878fedce67dfe830770f265190aaab283c1"
+    },
+    {
+      "source": "references/emontion-audit-52.md",
+      "target": "references/emontion-audit-52.md",
+      "sha256": "44f4af38f5e54db9b95c36ec14f7771bb3c980ae4fed8a3f223a64a72c9beac1"
+    },
+    {
+      "source": "references/expression-coordination.md",
+      "target": "references/expression-coordination.md",
+      "sha256": "92af44b53176496fda93c1420612c8e68c69a7507ab675c2e80eafd6d6a75e9a"
+    },
+    {
+      "source": "references/style-and-layout.md",
+      "target": "references/style-and-layout.md",
+      "sha256": "b5137b33b7cbac0322901f73d3371ee84a8490e39e6904c996848fa2b0135823"
+    },
+    {
+      "source": "references/layers-and-qa.md",
+      "target": "references/layers-and-qa.md",
+      "sha256": "8d586ef26e24919556ea72fb509e98ef5dec0fc3404237e74c5b5f9f0e047892"
+    },
+    {
+      "source": "references/eye-mouth-sharing.md",
+      "target": "references/eye-mouth-sharing.md",
+      "sha256": "dad686f5853a26ef7a43e1c53dea929c8f2e77b910ebab6542369a483c0b3e29"
+    },
+    {
+      "source": "references/manifest-and-export.md",
+      "target": "references/manifest-and-export.md",
+      "sha256": "483383c25efe932bd551542826a276796e646d3885688d3da44c46edbbae1abe"
+    },
+    {
+      "source": "references/plugin-contract.md",
+      "target": "references/plugin-contract.md",
+      "sha256": "d0c5c942146ede8cb909c99ee82deac2bc8d9d6b7112dd01f2a6cd56a901c543"
+    },
+    {
+      "source": "assets/LL_StandingPictureDirect.js",
+      "target": "assets/LL_StandingPictureDirect.js",
+      "sha256": "685bb88f6abc97d6c83d33164954124eb6e06795897993e50ceaa7a01a7199eb"
+    },
+    {
+      "source": "assets/report.html",
+      "target": "assets/report.html",
+      "sha256": "f704d87dfabf596d441e684ab28aedf8b188c098475da0e09c542f7f299259aa"
+    },
+    {
+      "source": "assets/body-report.html",
+      "target": "assets/body-report.html",
+      "sha256": "70c1bd4f9fd7fd0fb8ed58b7de0296a5f6c4572b01f5302ab4945b7d82593f38"
+    }
+  ]
+}

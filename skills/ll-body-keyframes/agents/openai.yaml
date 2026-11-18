@@ -1,0 +1,4 @@
+interface:
+  display_name: "LL 肢體定格動作"
+  short_description: "同畫布2×2繪製肢體四格，裁切補邊至720×720並獨立驗收"
+  default_prompt: "使用 $ll-body-keyframes，依角色設定及指定編號，在同一張2×2畫布繪製四個肢體動作階段，再裁切補邊至720×720並檢視循環。"

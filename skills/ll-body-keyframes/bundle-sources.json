@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "skill": "ll-body-keyframes",
+  "canonical_source": "repository root",
+  "refresh_command": "python -X utf8 scripts/sync_workflow_skills.py",
+  "files": [
+    {
+      "source": "requirements.txt",
+      "target": "requirements.txt",
+      "sha256": "08be9578d04b65559eb8478d7a66538d593e017bf911cd340d03453a54b67eee"
+    },
+    {
+      "source": "scripts/body_keyframes.py",
+      "target": "scripts/body_keyframes.py",
+      "sha256": "66755e59d1c0b325add3b0c03e34e4cfd08a518ef187b503782b799a1fd14852"
+    },
+    {
+      "source": "scripts/catalogs.py",
+      "target": "scripts/catalogs.py",
+      "sha256": "13f79a3f1485d19a8588ec80d83636957234b37bc6778612844f02f1ed012fe9"
+    },
+    {
+      "source": "references/expression-catalog-60.md",
+      "target": "references/expression-catalog-60.md",
+      "sha256": "4747dc35941d1ee2ff985930822c2fe4f780ad81c4803453122bc561cec3003e"
+    },
+    {
+      "source": "references/body-language-catalog-60.md",
+      "target": "references/body-language-catalog-60.md",
+      "sha256": "de8b670ee26727bd2b0508d47e111891cc3865023abf15e54228cd927deee89a"
+    },
+    {
+      "source": "references/body-language-catalog-60-v2.md",
+      "target": "references/body-language-catalog-60-v2.md",
+      "sha256": "0054440bd67e36e2068b98bab6b340b116e4157b0db23d2606f2fd1ec32f3d8f"
+    },
+    {
+      "source": "references/expression-catalog-60-body-v2.json",
+      "target": "references/expression-catalog-60-body-v2.json",
+      "sha256": "6eb6014a9dcd66241781a4305260c878fedce67dfe830770f265190aaab283c1"
+    },
+    {
+      "source": "references/emontion-audit-52.md",
+      "target": "references/emontion-audit-52.md",
+      "sha256": "44f4af38f5e54db9b95c36ec14f7771bb3c980ae4fed8a3f223a64a72c9beac1"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # manifest與共用版匯出
 
+本文件描述舊整合匯出器的schema，以及眼嘴技能沿用的face-only部分。新的肢體定格使用獨立body-manifest，不以本文件的A完成條件作前提。眼嘴專用入口為`scripts/eye_mouth_portrait.py`，plan固定face-only且export拒絕肢體任務；下文`scripts/ll_portrait_pipeline.py`保留舊整合行為，不能將預設full當成新眼嘴流程。
+
 ## 正式清單與規劃
 
 `plan`預設直接解析expression-catalog-60.md及body-language-catalog-60.md，核對編號與中文名稱。附帶JSON只是衍生快照，不作隱含fallback。manifest保留兩份Markdown的來源與SHA，原表情提示保留在face_prompt，肢體文字保留body_hint/body_prompt。
@@ -42,7 +44,7 @@ python scripts/ll_portrait_pipeline.py compose --base run/work/01/base.png --can
 
 上例僅示範編輯矩形[300,100,460,300)，每格160×200、合繪工作圖640×200；實際尺寸依母圖重新量測。split只接受RGBA PNG與正確總尺寸，生成的臉部工作圖明確用`--columns 4`橫向分格，不重採樣或置中。舊直向圖集仍可明確用`--columns 1`拆分，這不是生成工作圖的方向。
 
-眼睛與嘴巴來自同一候選臉格，只在回貼驗收及輸出時分層；最後的插件圖集才各為1欄4列。B仍是完整身體橫向4欄1列，720單格時為2880×720。非標準原圖先記錄整組共同映射；已存在接受的休止圖時，0格取該base，不採用漂移的生成0格。
+眼睛與嘴巴來自同一候選臉格，只在回貼驗收及輸出時分層；最後的插件圖集才各為1欄4列。B的遊戲圖集是完整身體橫向4欄1列，720單格時為2880×720；獨立肢體技能先同畫布2×2生成，再裁切補邊與重排，不以4×1遊戲圖集代稱生成格式。非標準原圖先記錄整組共同映射；已存在接受的休止圖時，0格取該base，不採用漂移的生成0格。
 
 ## 預設共用版匯出
 
@@ -84,7 +86,7 @@ plugin副本內的LL_EXPORTED_BODY_MOTIONS保存身體動作登錄，ACT一次�
 
 ## 進度、相容與證據
 
-- 預設只接受A/B/adapter皆完成；`--allow-partial`可交付已通過的A與已完成B，其他項目標pending或unbound，沒有占位PNG。A未完成時不得開始或匯出新B。
+- 舊full整合模式預設只接受A/B/adapter皆完成；`--allow-partial`可交付已通過的A與已完成B，其他項目標pending或unbound，沒有占位PNG。舊整合模式的A未完成時不得開始或匯出新B；此依賴不套用獨立肢體技能。face-only只驗收本次眼嘴任務，保留的body參照不代表待做B。
 - `--layout legacy`才保留舊完整底圖匯出，供不支援共用臉圖的LL使用。此模式使用舊式struct參數與靜態報告，不具新共用版容量或內建對照承諾。
 - `--qa-images`才另外存4×4組合接觸圖；預設HTML可手動選16組合，不繪製或強制輸出矩陣。
 - preview_settings可在manifest填run內JSON路徑或物件，包含來源、width/height及profile（origin/x/y/x2/y2/x3/y3/x4/y4/reverse/scaleX/Y/opacity）。有遊戲實值就用實值；沒有就生成1280×720建議配置並明示。特殊tone/blend／其他插件圖層不在通用HTML精確模擬範圍。

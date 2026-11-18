@@ -1,0 +1,4 @@
+interface:
+  display_name: "LL 眨眼與說話立繪"
+  short_description: "固定姿勢母圖的眨眼與說話差分，局部合繪眼嘴四格並匯出LL圖集"
+  default_prompt: "使用 $ll-eye-mouth-animation，固定角色姿勢與母圖，只在臉部矩形合繪橫向眼嘴四格，再裁出獨立眼睛與嘴型圖集。"

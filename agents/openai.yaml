@@ -1,4 +1,4 @@
 interface:
-  display_name: "LL 立繪與眼嘴動畫製作"
-  short_description: "依正式清單製作60表情，單一母圖與眼嘴合繪橫向四格，裁切直向圖集並匯出LL對照"
-  default_prompt: "使用 $ll-standing-portrait-maker，依角色設定圖及正式表情／肢體清單製作立繪；A只用一張母圖，在固定臉部矩形以同一張橫向4欄1列合繪眼嘴四格，再裁出獨立直向圖集，保留原有肢體動作、編號及JS匯出流程。"
+  display_name: "LL 立繪流程選擇"
+  short_description: "依需求選擇肢體2×2定格或固定姿勢眼嘴差分，兩套可各自製作與驗收"
+  default_prompt: "使用 $ll-standing-portrait-maker，依本次需求選擇肢體定格或固定姿勢眼嘴動畫，只進入對應的獨立技能；若兩者皆需，分開規劃與驗收。"

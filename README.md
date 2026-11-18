@@ -1,81 +1,73 @@
-# LL 立繪與眼嘴動畫製作
+# LL 立繪：兩套獨立製作流程
 
-`ll-standing-portrait-maker` 是依角色設定圖與正式 60 表情／肢體清單，製作 RPG Maker MZ 對話立繪的 Codex 技能。畫風依本次角色設定圖決定。
+本儲存庫將肢體定格與固定姿勢的眨眼、張嘴拆成兩套可分別使用的技能。兩套共用角色來源與正式編號，各自規劃、製作與驗收；製作肢體不必先完成60個臉部表情。
 
-固定姿勢共用一張母圖；各表情在臉部矩形內，以同一張橫向四格工作圖合繪眼睛與嘴巴，再拆成獨立眼嘴圖集。匯出時保留正式表情編號，並將本批對照嵌入 LL 插件副本。
+| 需求 | 入口 | 製圖與交付 |
+| --- | --- | --- |
+| 手勢、身體動作、四格定格或循環 | [ll-body-keyframes](skills/ll-body-keyframes/SKILL.md) | 同畫布2×2四個完整人物階段，裁切並共同補邊至720×720；可另輸出預覽與4×1圖集 |
+| 固定站姿的表情、眨眼與說話 | [ll-eye-mouth-animation](skills/ll-eye-mouth-animation/SKILL.md) | 共用母圖，臉部矩形橫向4×1合繪眼嘴，交付獨立直向1×4眼／嘴圖集 |
 
-## 內容
+原[SKILL.md](SKILL.md)保留為選擇入口。兩個子資料夾各自包含所需工具、參考與資源，不必連同另一套技能使用。這是儲存庫內的技能檔，尚未全域安裝。圖片由當次可用的圖像工具生成；附帶工具只規劃、分格、合成、驗證及匯出。
 
-- **A：60 個表情**，共用底圖搭配局部臉圖，眼睛與嘴巴各為直向 1 欄 4 列圖集。
-- **B：肢體語言**，正式清單預設 43 個新姿勢、17 個沿用預設站姿；新動作使用橫向 4 欄 1 列圖集。
-- **LL 模板 v1.4.0**，支援共用底圖、局部臉圖、獨立眼嘴與原生身體動作播放器。
-- **離線預覽**，匯出 `report.html` 與 `body-report.html`，使用交付素材檢查表情、眼嘴組合、鏡像、縮放與身體動作。
-- **驗證工具**，檢查正式清單、來源雜湊、遮罩、休止格重建、眼嘴 16 組合、圖集去重與插件對照。
+## 肢體四格
 
-圖片需由可用的圖片生成／編輯工具製作；附帶腳本負責分格、合成、裁切、拆層與驗證。
+請讀取肢體入口並提供角色設定、已選定畫風、指定編號與新輸出目錄。例如：
 
-## 取得與使用
+> 使用 ll-body-keyframes，依已選角色版本製作第31號動作。在同一張2×2畫布繪製四個肢體階段，按[[1,2],[3,4]]裁切後共同補邊至720×720，提供定格與循環預覽。
 
-本版已依原始52表情核對修正21為「嘆氣」，並將較恐怖的笑容改為溫和漫畫表現。53／60以雙眼睜開為休止，只眨固定一眼；60另有閉嘴休止與三階段吐舌。完整規則見 [表情協調](references/expression-coordination.md)。
-
-需要新版肢體時，以 `--body-catalog references/body-language-catalog-60-v2.md` 選35新增／25沿用；原43／17清單保留。兩版都搭配同一套正式60表情，數量依所選動作表計算。
-
-[下載最新版 ZIP](https://github.com/Colorzuiko/ll-standing-portrait-maker/archive/refs/heads/main.zip)，解壓後將完整資料夾命名為 `ll-standing-portrait-maker`。保留 `SKILL.md`、`agents/`、`references/`、`scripts/` 與 `assets/` 的相對位置。
-
-讓 Codex 讀取 [SKILL.md](SKILL.md)，並提供角色設定圖、工作輸出位置，以及目標 LL 插件。若沒有既定插件，可使用附帶的 `assets/LL_StandingPictureDirect.js` 作為目標。
-
-可使用以下請求：
-
-> 使用 $ll-standing-portrait-maker，依角色設定圖與正式表情／肢體清單製作立繪。A 共用一張母圖，以臉部矩形橫向四格合繪眼嘴，再裁出獨立直向圖集，依正式清單處理 B，輸出到新的 run／export 目錄。
-
-執行圖片處理工具需要 Python 3.10 以上與 Pillow：
+以技能目錄為工作目錄：
 
 ```sh
 python -m pip install -r requirements.txt
+python -X utf8 scripts/body_keyframes.py plan --character hero --numbers 31 --out /project/output/body/hero/run-001
+python -X utf8 scripts/body_keyframes.py split --image /project/output/body/hero/work-2x2.png --out /project/output/body/hero/run-001/frames
+python -X utf8 scripts/body_keyframes.py pack --frames /run/frames/frame_1.png /run/frames/frame_2.png /run/frames/frame_3.png /run/frames/frame_4.png --out /project/output/body/hero/pack-001 --preview
 ```
 
-## 命令列工具
+plan不生成圖片；pack不代表美術驗收或遊戲綁定。預設四格完整人物，局部／分層製法另作可選變體；保留使用者比較後選定的版本。詳見[肢體工具及交付](skills/ll-body-keyframes/references/body-keyframe-tools.md)。
 
-以下命令在本資料夾執行；`my-project`、角色代碼及輸出位置請依實際專案調整。每次使用新的 run／export 目錄。
+## 眨眼與張嘴
+
+請讀取眼嘴入口並提供角色設定、固定姿勢母圖、目標LL插件（如需匯出）與新輸出目錄。例如：
+
+> 使用 ll-eye-mouth-animation，固定母圖姿勢，只在臉部矩形合繪橫向眼嘴四格，再拆成獨立直向眼睛、嘴型圖集；本次不製作肢體動作。
+
+以技能目錄為工作目錄：
 
 ```sh
-python -X utf8 scripts/ll_portrait_pipeline.py probe --plugin assets/LL_StandingPictureDirect.js
-python -X utf8 scripts/ll_portrait_pipeline.py plan --character hero --plugin assets/LL_StandingPictureDirect.js --out ../my-project/output/hero/run-001
+python -m pip install -r requirements.txt
+python -X utf8 scripts/eye_mouth_portrait.py probe --plugin assets/LL_StandingPictureDirect.js
+python -X utf8 scripts/eye_mouth_portrait.py plan --character hero --plugin assets/LL_StandingPictureDirect.js --out /project/output/eye-mouth/hero/run-001
+python -X utf8 scripts/eye_mouth_portrait.py export --manifest /project/output/eye-mouth/hero/run-001/manifest.json --out /project/output/eye-mouth/hero/export-001
 ```
 
-`plan` 建立待製作的清單與 manifest，不會自動生成或驗收圖片。依技能流程完成素材、遮罩、圖集與驗收記錄後，執行：
+plan強制face-only；完成素材與實際QA後才export。專用入口拒絕將含肢體動作的計畫當眼嘴包匯出。只做指定範圍，不因要求眨眼自動展開全部60項。53／60的單眼眨眼與60的吐舌規則見[表情協調](references/expression-coordination.md)。休止格重建與16個眼嘴組合由程式檢查，目視審查保留實際結果。
+
+交付共用底圖、局部臉圖、實際眼嘴圖集、LL插件副本與離線預覽；不自動安裝到遊戲。素材、HTML與MZ實機驗證分別記錄。
+
+## 共用規則與相容
+
+畫風依本次主設定圖或使用者明示，不內建特定角色、賽璐璐或固定明暗風格。兩套使用[正式60表情](references/expression-catalog-60.md)與必要的肢體語意；肢體原表為43新增／17沿用，明確選用[v2](references/body-language-catalog-60-v2.md)時為35／25。保留正式編號，不生成沿用項目的占位PNG。
+
+根目錄的 `ll_portrait_pipeline.py`、舊manifest與LL模板v1.4.0保留整合相容行為。原full模式的A完成後才做B限制，只適用舊整合包；新的肢體流程獨立執行。舊結構詳見[manifest與匯出](references/manifest-and-export.md)。現有角色成品、試作與選擇紀錄不因拆分而改寫。
+
+## 維護與驗證
+
+根目錄的共用腳本、清單、眼嘴參考及LL資源為維護來源；子技能中的副本由同步工具刷新。`bundle-sources.json`保存來源與SHA，避免兩份工具默默分歧。各子技能自己的SKILL、介面說明與肢體專用參考直接在對應資料夾維護。
+
+Git以`.gitattributes`固定文字檔的LF換行，讓不同系統取得相同來源位元組，避免換行轉換使SHA檢查失敗。
+
+在儲存庫根目錄執行：
 
 ```sh
-python -X utf8 scripts/ll_portrait_pipeline.py export --manifest ../my-project/output/hero/run-001/manifest.json --out ../my-project/output/hero/export-001
-```
-
-匯出包含 `runtime/img/pictures/<character>/`、`plugin/`、`config/`、`qa/`、manifest 與預覽 HTML。完整結構與選項見 [manifest 與匯出](references/manifest-and-export.md)。
-
-## 測試
-
-Python 測試需要 Pillow；插件測試另需可執行 `node` 的 Node.js 環境：
-
-```sh
+python -X utf8 scripts/sync_workflow_skills.py
+python -X utf8 scripts/sync_workflow_skills.py --check
 python -X utf8 -m unittest discover -s scripts -p "test_*.py"
-node scripts/test_body_player.cjs
+python -X utf8 scripts/sync_workflow_skills.py --package output/skill-packages/new-version
 ```
 
-Windows 若因暫存資料夾過深而遇到路徑長度錯誤，請將測試用的 `TEMP`／`TMP` 指向較短路徑。`-X utf8` 可避免中文系統預設編碼影響測試。
+打包只收兩套技能各自需要的明列檔案，不包含角色圖、歷史輸出或快取。輸出目錄必須不存在；每個ZIP含一個獨立技能資料夾。Python工具需要3.10+與Pillow。插件未修改時不必重新測試遊戲；若修改插件，可另跑 `node scripts/test_body_player.cjs`。瀏覽器檢查工具見 `scripts/test_report.cjs`。
 
-`scripts/test_report.cjs` 是選用的瀏覽器檢查工具，需要 Playwright 與 Chrome；以 `PLAYWRIGHT_MODULE`、`CHROME_BINARY` 指定本機位置，並傳入已完成的匯出目錄。這些檢查不會呼叫圖片服務。
+本次拆分不會全域安裝技能或變更遊戲插件。
 
-## 參考
-
-- [正式 60 表情清單](references/expression-catalog-60.md)
-- [正式肢體語言清單](references/body-language-catalog-60.md)
-- [另存新版肢體動作 v2：35 新增／25 沿用](references/body-language-catalog-60-v2.md)
-- [新版表情與肢體設定 JSON 快照](references/expression-catalog-60-body-v2.json)
-- [emontion 原圖與前 52 項逐項核對](references/emontion-audit-52.md)
-- [畫風與構圖](references/style-and-layout.md)
-- [局部差分與 QA](references/layers-and-qa.md)
-- [眼嘴素材共用判定](references/eye-mouth-sharing.md)
-- [LL 插件契約與控制碼](references/plugin-contract.md)
-
-匯出器只產生新的交付資料夾與插件副本，不會自動安裝到遊戲。素材驗收、HTML 預覽、最小宿主測試與完整 MZ 實機驗證分開記錄；完整遊戲相容性仍需實際驗證。
-
-本儲存庫包含技能與工具，不包含角色設定圖、歷史生成圖包、工作輸出或暫存檔。
+Windows測試若遇到暫存路徑過長，將測試使用的TEMP／TMP指向專案內較短目錄後重跑；這不需要變更系統設定。
